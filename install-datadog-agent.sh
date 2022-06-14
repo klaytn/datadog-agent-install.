@@ -19,7 +19,7 @@ process_config:
 tags:
   - nodetype:$NODE_TYPE
   - instance:$INSTANCE
-  - network:cypress
+  - network:$NETWORK
 EOF
 
 #3. Klaytn Custom Metric Set Up
@@ -68,7 +68,8 @@ EOF
 if [ $NODE_TYPE == "cn" ]
 then
 
-LOG_DIR=`cat /etc/kcnd/conf/kcnd.conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
+conf=`find / -name 'kcnd.conf' -type f`
+LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
 
 mkdir /etc/datadog-agent/conf.d/go.d
 cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
