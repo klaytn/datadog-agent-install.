@@ -65,8 +65,6 @@ instances:
       - klaytn_p2p_DialFailCounter
 EOF
 
-if [ $NODE_TYPE == "pn" ]
-then
 
 conf=`find / -name 'kpnd.conf' -type f`
 LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
@@ -81,7 +79,7 @@ logs:
     source: go
     sourcecategory: sourcecode
 EOF
-fi
+
 
 #5. Network Performance 
 sudo -u dd-agent cp /etc/datadog-agent/system-probe.yaml.example /etc/datadog-agent/system-probe.yaml
