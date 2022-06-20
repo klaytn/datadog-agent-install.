@@ -74,7 +74,7 @@ cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
 #4. Log Config
 logs:
   - type: file
-    path: $LOG_DIR/kcnd.out
+    path: $LOG_DIR/kpnd.out
     service: klaytn-pn
     source: go
     sourcecategory: sourcecode
