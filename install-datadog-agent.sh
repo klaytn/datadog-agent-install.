@@ -70,9 +70,6 @@ EOF
 if [ $NODE_TYPE == "cn" ]
 then
 
-conf=`find / -name 'kcnd.conf' -type f`
-LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
-
 mkdir -p /etc/datadog-agent/conf.d/go.d
 cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
 #4. Log Config
