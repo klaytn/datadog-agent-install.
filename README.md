@@ -91,7 +91,7 @@ network_config:
 
 * CN Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-cn NODE_TYPE=cn INSTANCE=cn bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-cn NODE_TYPE=cn INSTANCE=cn LOG_DIR=/data/kcnd/log/kcnd.out bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * PN1 Install
