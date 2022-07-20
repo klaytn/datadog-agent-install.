@@ -63,6 +63,8 @@ instances:
       - klaytn_klay_prop_blocks_in_packets
       - klaytn_klay_prop_blocks_out_packets
       - klaytn_p2p_DialFailCounter
+      - klaytn_consensus_istanbul_core_hashLock
+      - klaytn_consensus_istanbul_core_committeeSize
 EOF
 
 if [ $NODE_TYPE == "cn" ]
@@ -90,6 +92,9 @@ cat <<EOF> /etc/datadog-agent/system-probe.yaml
 network_config:   
     enabled: true
 EOF
+sudo systemctl enable datadog-agent-sysprobe
+sudo systemctl start datadog-agent-sysprobe
 
 #6. APPLY datadog-agent Config
 systemctl restart datadog-agent
+
