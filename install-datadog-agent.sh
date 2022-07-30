@@ -65,6 +65,7 @@ instances:
       - klaytn_p2p_DialFailCounter
       - klaytn_consensus_istanbul_core_hashLock
       - klaytn_consensus_istanbul_core_committeeSize
+      - klaytn_build_info
 EOF
 
 if [ $NODE_TYPE == "cn" ]

@@ -63,6 +63,7 @@ instances:
       - klaytn_klay_prop_blocks_in_packets
       - klaytn_klay_prop_blocks_out_packets
       - klaytn_p2p_DialFailCounter
+      - klaytn_build_info
 EOF
 
 
