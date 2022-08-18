@@ -1,14 +1,5 @@
 #!/bin/bash
 
-#1. Check for variable values
-if [[ -z "$HOST_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]]; then
-  echo "Please put all variable values correctly."
-  exit 1 
-else
-  DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=$DD_API_KEY DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
-fi
-
-#2. TAG Set Up
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
 hostname: $HOST_NAME
 logs_enabled: true
@@ -19,10 +10,31 @@ process_config:
 tags:
   - nodetype:$NODE_TYPE
   - instance:$INSTANCE
-  - network:$NETWORK
+  - network:cypress
+
+additional_endpoints:
+  "https://app.datadoghq.com":
+  - $API_KEY
+
+logs_config:
+  use_http: true
+  additional_endpoints:
+  - api_key:  $API_KEY
+    Host: "agent-http-intake.logs.datadoghq.com"
+    Port: 443
+    is_reliable: true
+
+
+network_devices:
+  metadata:
+    use_http: true
+    additional_endpoints:
+    - api_key: $API_KEY
+      Host: "https://app.datadoghq.com"
+      Port: 443
+      is_reliable: true
 EOF
 
-#3. Klaytn Custom Metric Set Up
 cat << EOF > /etc/datadog-agent/conf.d/openmetrics.d/conf.yaml
 init_config:
 
@@ -63,23 +75,9 @@ instances:
       - klaytn_klay_prop_blocks_in_packets
       - klaytn_klay_prop_blocks_out_packets
       - klaytn_p2p_DialFailCounter
+      - klaytn_consensus_istanbul_core_hashLock
+      - klaytn_consensus_istanbul_core_committeeSize
       - klaytn_build_info
 EOF
 
-
-conf=`find / -name 'kpnd.conf' -type f`
-LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
-
-mkdir -p /etc/datadog-agent/conf.d/go.d
-cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
-#4. Log Config
-logs:
-  - type: file
-    path: $LOG_DIR/kpnd.out
-    service: klaytn-pn
-    source: go
-    sourcecategory: sourcecode
-EOF
-
-#5. APPLY datadog-agent Config
 systemctl restart datadog-agent
