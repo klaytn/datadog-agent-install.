@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#remove network host
+sudo systemctl stop datadog-agent-sysprobe
+rm -rf /etc/datadog-agent/system-probe.yaml
+
+#update klaytn metric
 cat << EOF > /etc/datadog-agent/conf.d/openmetrics.d/conf.yaml
 init_config:
 
@@ -44,3 +49,6 @@ instances:
       - klaytn_consensus_istanbul_core_committeeSize
       - klaytn_build_info
 EOF
+
+#restart agent
+sudo systemctl restart datadog-agent
