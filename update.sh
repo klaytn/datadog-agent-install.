@@ -2,6 +2,7 @@
 
 #remove network host
 sudo systemctl stop datadog-agent-sysprobe
+sudo systemctl disable datadog-agent-sysprobe
 rm -rf /etc/datadog-agent/system-probe.yaml
 
 #update klaytn metric
