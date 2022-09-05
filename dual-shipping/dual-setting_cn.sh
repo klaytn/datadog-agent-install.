@@ -10,7 +10,7 @@ process_config:
 tags:
   - nodetype:$NODE_TYPE
   - instance:$INSTANCE
-  - network:cypress
+  - network:$NETWORK
 
 additional_endpoints:
   "https://app.datadoghq.com":

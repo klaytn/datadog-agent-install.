@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #1. Check for variable values
-if [[ -z "$HOST_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]]; then
+if [[ -z "$HOST_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]] || [[ -z "$NETWORK"]]; then
   echo "Please put all variable values correctly."
   exit 1 
 else
@@ -10,7 +10,7 @@ fi
 
 #2. TAG Set Up
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
-hostname: $HOST_NAME
+hostname: $HOSTNAME
 logs_enabled: true
 
 process_config:
@@ -83,16 +83,6 @@ logs:
 EOF
 fi
 
-#5. Network Performance 
-sudo -u dd-agent cp /etc/datadog-agent/system-probe.yaml.example /etc/datadog-agent/system-probe.yaml
-
-cat <<EOF> /etc/datadog-agent/system-probe.yaml
-network_config:   
-    enabled: true
-EOF
-sudo systemctl enable datadog-agent-sysprobe
-sudo systemctl start datadog-agent-sysprobe
-
-#6. APPLY datadog-agent Config
+#5. APPLY datadog-agent Config
 systemctl restart datadog-agent
 

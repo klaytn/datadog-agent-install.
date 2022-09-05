@@ -84,25 +84,25 @@ logs:
 
 * CN Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn LOG_DIR=/data/kcnd/log/kcnd.out bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn LOG_DIR=/data/kcnd/log/kcnd.out NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * PN1 Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn1 bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn1 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * PN2 Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-02 NODE_TYPE=pn INSTANCE=pn2 bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-02 NODE_TYPE=pn INSTANCE=pn2 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * DUAL SHIPPING CN
 ```shell
-HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn-01 bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_cn.sh)"
+HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn-01 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_cn.sh)"
 ```
 
 * DUAL SHIPPING PN
 ```shell
-HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn-01 bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_pn.sh)"
+HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn-01 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_pn.sh)"
 ```
