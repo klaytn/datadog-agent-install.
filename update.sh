@@ -22,7 +22,7 @@ process_config:
   blacklist_patterns:
     - ^([^k]|k(k|ck)*([^kc]|c[^kn]))*(k(k|ck)*c?)?$
 EOF
-#systemctl restart kcnd
+systemctl restart datadog-agent
 else
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
 
@@ -31,5 +31,5 @@ process_config:
   blacklist_patterns:
     - ^([^k]|k(k|pk)*([^kp]|p[^kn]))*(k(k|pk)*p?)?$
 EOF
-#systemctl restart kpnd
+systemctl restart datadog-agent
 fi
