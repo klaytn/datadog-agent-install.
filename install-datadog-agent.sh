@@ -1,26 +1,68 @@
 #!/bin/bash
 
 #1. Check for variable values
-if [[ -z "$HOST_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]] || [[ -z "$NETWORK"]]; then
+if [[ -z "$NODE_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]] || [[ -z "$NETWORK" ]]
+then
   echo "Please put all variable values correctly."
-  exit 1 
+  exit 1
 else
   DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=$DD_API_KEY DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
 fi
 
 #2. TAG Set Up
+if [ $NODE_TYPE == "cn" ]
+then
+
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
-hostname: $HOSTNAME
+hostname: $NODE_NAME
 logs_enabled: true
 
 process_config:
   enabled: true
+  blacklist_patterns:
+    - ^([^k]|k(k|ck)*([^kc]|c[^kn]))*(k(k|ck)*c?)?$
+
+enable_gohai: false
+
+cloud_provider_metadata: [ ]
 
 tags:
   - nodetype:$NODE_TYPE
   - instance:$INSTANCE
   - network:$NETWORK
 EOF
+
+mkdir -p /etc/datadog-agent/conf.d/go.d
+cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
+#4. Log Config
+logs:
+  - type: file
+    path: $LOG_DIR/kcnd.out
+    service: klaytn-cn
+    source: go
+    sourcecategory: sourcecode
+EOF
+else
+cat <<EOF>> /etc/datadog-agent/datadog.yaml
+hostname: $NODE_NAME
+
+logs_enabled: false
+
+process_config:
+  enabled: true
+  blacklist_patterns:
+    - ^([^k]|k(k|pk)*([^kp]|p[^kn]))*(k(k|pk)*p?)?$
+
+enable_gohai: false
+
+cloud_provider_metadata: [ ]
+
+tags:
+  - nodetype:$NODE_TYPE
+  - instance:$INSTANCE
+  - network:$NETWORK
+EOF
+fi
 
 #3. Klaytn Custom Metric Set Up
 cat << EOF > /etc/datadog-agent/conf.d/openmetrics.d/conf.yaml
@@ -68,21 +110,5 @@ instances:
       - klaytn_build_info
 EOF
 
-if [ $NODE_TYPE == "cn" ]
-then
-
-mkdir -p /etc/datadog-agent/conf.d/go.d
-cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
-#4. Log Config
-logs:
-  - type: file
-    path: $LOG_DIR/kcnd.out
-    service: klaytn-cn
-    source: go
-    sourcecategory: sourcecode
-EOF
-fi
-
 #5. APPLY datadog-agent Config
 systemctl restart datadog-agent
-
