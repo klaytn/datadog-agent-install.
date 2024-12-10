@@ -67,7 +67,7 @@ instances:
 EOF
 
 
-conf=`find / -name 'kpnd.conf' -type f`
+conf=`find / -name 'kpnd.conf' -type f | head -n 1`
 LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
 
 mkdir -p /etc/datadog-agent/conf.d/go.d
