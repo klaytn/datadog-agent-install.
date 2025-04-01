@@ -1,11 +1,11 @@
-# Klaytn Datadog Agent 
+# Kaia Datadog Agent 
 
-This scripts in this repository are the Klaytn Datadog set-up scripts for monitoring the CN and PN nodes of Klaytn.
-Through this script, you can monitor Klaytn's Metric, Log, and Infrastructure information.
+This scripts in this repository are the Kaia Datadog set-up scripts for monitoring the CN and PN nodes of Kaia.
+Through this script, you can monitor Kaia's Metric, Log, and Infrastructure information.
 
-The Klaytn Metric can see the state of the blockchain by the transaction generation rate, CN node and PN node connection status, CouncilSize, and RoundChange Information.
+The Kaia Metric can see the state of the blockchain by the transaction generation rate, CN node and PN node connection status, CouncilSize, and RoundChange Information.
 
-The Klaytn Log allows you to view real-time block creation results, block numbers, and errors on nodes.
+The Kaia Log allows you to view real-time block creation results, block numbers, and errors on nodes.
 
 Infra monitoring can see the state of disk, memory, cpu, load average.
 
@@ -20,7 +20,7 @@ Infra monitoring can see the state of disk, memory, cpu, load average.
 ```shell
 FILEPATH  : /etc/datadog-agent/datadog.yaml
 
-HOST_NAME : Write your hostname
+NODE_NAME : Write your hostname
 NODE_TYPE : Write according to the nodetype (e.g. cn or pn)
 INSTANCE  : Write according to the instance (e.g. cn or pn1 or pn2)
 ```
@@ -75,7 +75,7 @@ FILEPATH : /etc/datadog-agent/conf.d/go.d/conf.yaml
 logs:
   - type: file
     path: $LOG_DIR/kcnd.out
-    service: klaytn-cn
+    service: kaia-cn
     source: go
     sourcecategory: sourcecode
 ```
@@ -84,25 +84,25 @@ logs:
 
 * CN Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn LOG_DIR=/data/kcnd/log/kcnd.out NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX NODE_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn LOG_DIR=/data/kcnd/log/kcnd.out NETWORK=mainnet bash -c "$(curl -L https://raw.githubusercontent.com/kaiachain/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * PN1 Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn1 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX NODE_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn1 NETWORK=mainnet bash -c "$(curl -L https://raw.githubusercontent.com/kaiachain/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * PN2 Install
 ```shell
-DD_API_KEY=XXXXXXXXXXXXXXXX HOST_NAME=test-pn-02 NODE_TYPE=pn INSTANCE=pn2 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/install-datadog-agent.sh)"
+DD_API_KEY=XXXXXXXXXXXXXXXX NODE_NAME=test-pn-02 NODE_TYPE=pn INSTANCE=pn2 NETWORK=mainnet bash -c "$(curl -L https://raw.githubusercontent.com/kaiachain/datadog-agent-install./main/install-datadog-agent.sh)"
 ```
 
 * DUAL SHIPPING CN
 ```shell
-HOST_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn-01 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_cn.sh)"
+NODE_NAME=test-cn-01 NODE_TYPE=cn INSTANCE=cn-01 NETWORK=mainnet bash -c "$(curl -L https://raw.githubusercontent.com/kaiachain/datadog-agent-install./main/dual-shipping/dual-setting_cn.sh)"
 ```
 
 * DUAL SHIPPING PN
 ```shell
-HOST_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn-01 NETWORK=cypress bash -c "$(curl -L https://raw.githubusercontent.com/klaytn/datadog-agent-install./main/dual-shipping/dual-setting_pn.sh)"
+NODE_NAME=test-pn-01 NODE_TYPE=pn INSTANCE=pn-01 NETWORK=mainnet bash -c "$(curl -L https://raw.githubusercontent.com/kaiachain/datadog-agent-install./main/dual-shipping/dual-setting_pn.sh)"
 ```
