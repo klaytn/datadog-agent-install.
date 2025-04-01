@@ -38,7 +38,7 @@ cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
 logs:
   - type: file
     path: $LOG_DIR/kcnd.out
-    service: klaytn-cn
+    service: kaia-cn
     source: go
     sourcecategory: sourcecode
 EOF
@@ -64,7 +64,7 @@ tags:
 EOF
 fi
 
-#3. Klaytn Custom Metric Set Up
+#3. Kaia Custom Metric Set Up
 cat << EOF > /etc/datadog-agent/conf.d/openmetrics.d/conf.yaml
 init_config:
 

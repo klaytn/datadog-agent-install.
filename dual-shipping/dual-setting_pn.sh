@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
-hostname: $HOST_NAME
+hostname: $NODE_NAME
 logs_enabled: true
 
 process_config:

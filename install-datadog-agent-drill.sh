@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #1. Check for variable values
-if [[ -z "$HOST_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]]; then
+if [[ -z "$NODE_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ -z "$DD_API_KEY" ]]; then
   echo "Please put all variable values correctly."
   exit 1 
 else
@@ -10,7 +10,7 @@ fi
 
 #2. TAG Set Up
 cat <<EOF>> /etc/datadog-agent/datadog.yaml
-hostname: $HOST_NAME
+hostname: $NODE_NAME
 logs_enabled: true
 
 process_config:
@@ -22,7 +22,7 @@ tags:
   - network:$NETWORK
 EOF
 
-#3. Klaytn Custom Metric Set Up
+#3. Kaia Custom Metric Set Up
 cat << EOF > /etc/datadog-agent/conf.d/openmetrics.d/conf.yaml
 init_config:
 
@@ -76,7 +76,7 @@ cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
 logs:
   - type: file
     path: $LOG_DIR/kpnd.out
-    service: klaytn-pn
+    service: kaia-pn
     source: go
     sourcecategory: sourcecode
 EOF
